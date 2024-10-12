@@ -15,7 +15,7 @@ def main():
     # Request API from APIlayer.com (Keyword : Currency)
     url = f"https://api.apilayer.com/exchangerates_data/convert?to={dem_currency}&from={init_currency}&amount={amount}"
     payload = {}
-    headers= {"apikey": "XA1YOaGmzrmuqI8SI9DzmEnQzySi02KB"}
+    headers= {"apikey": "Your key"}
 
     response = requests.request("GET", url, headers = headers, data = payload)
     result = response.json()
