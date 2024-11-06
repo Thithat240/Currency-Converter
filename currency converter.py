@@ -1,30 +1,44 @@
-"""currency converter"""
+"""Currency Converter"""
 
+import tradermadekey
 import requests
 
-def main():
-    """currency converter"""
-    init_currency = input("Enter the initial currency: ")
-    # Variable for recieve initial currency befor conversinon
-    dem_currency = input("Enter the demand currency: ")
-    # Variable for recieve demand currency after conversion
+#API Keys
+api_key = tradermadekey.key
 
-    amount = float(input("Enter the amount for converting: "))
-    # Variable for recieve amount of initial currency for conversion
-
-    # Request API from APIlayer.com (Keyword : Currency)
-    url = f"https://api.apilayer.com/exchangerates_data/convert?to={dem_currency}&from={init_currency}&amount={amount}"
-    payload = {}
-    headers= {"apikey": "Your key"}
-
-    response = requests.request("GET", url, headers = headers, data = payload)
-    result = response.json()
-
-    status_code = response.status_code
-    if status_code == 200: # Condition for check Error from reponse then get result
-        print("Conversion result: " + str(result["result"]))
+def convert_currency(amount, from_currency, to_currency):
+    """Return rates and covert amount"""
+    # Request rates from tradermade.com
+    url = f"https://marketdata.tradermade.com/api/v1/convert?api_key={api_key}&from={from_currency}&to={to_currency}&amount={amount}"
+    response = requests.get(url)
+    # Check if the request was successful
+    if response.status_code == 200:
+        rate = response.json()["quote"]
+        converted_amount = response.json()["total"]
+        return rate, converted_amount
     else:
-        print("Error response: " + str(result["error"]))
-        quit()
+        return None, None
 
-main()
+def currency_converter():
+    """Currency converter application"""
+    # Input amount
+    amount = float(input())
+    # Input 'from' currency
+    from_currency = input()
+    # Input 'to' currencies
+    to_currency = input()
+    # Check if the exchange pair is avaliable
+    try:
+        # Convert currency 
+        rate, converted_amount = convert_currency(amount, from_currency, to_currency)
+        # Check API is avaliable.
+        if rate:
+            # Display result
+            return f"""Converted amount : {amount} {from_currency} = {converted_amount} {to_currency}
+Conversion rate : {rate}"""
+        else:
+            return f"Something Went Wrong Please Check with your API Provider"
+    except:
+        return f"Error: Exchange rates not available for {from_currency} to {to_currency}."
+    
+print(currency_converter())
