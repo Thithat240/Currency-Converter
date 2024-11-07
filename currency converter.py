@@ -148,7 +148,7 @@ pair={
     }
 
 #Slectbox list
-currencies = list(pair.keys())
+currencies = [f"{list(pair.keys())[i]} ({list(pair.values())[i]})" for i in range(len(pair))]
 
 #Function of Convert button
 def convert():
@@ -171,35 +171,61 @@ def convert():
 # Setting up the main window
 window = tk.Tk()
 window.title("Pycurrency Hub Currency Converter")
-window.geometry("500x400")
+window.geometry("1000x700")
 
 # Header
-header_label = tk.Label(window, text="Currency Converter")
+header_label = tk.Label(window, text="Currency Converter", font=("Helvetica", 16))
 header_label.pack(pady=10)
 
+# Description
+subheader_label = tk.Label(window, text="This Currency Converter is a user-friendly application designed to facilitate real-time currency conversion between various global currencies.This application is created by 'PyCurrency Hub' as the final project for PSCP.", wraplength=380)
+subheader_label.pack(pady=5)
+
+# Instructions
+instructions_label = tk.Label(window, text="How to use", font=("Helvetica", 12))
+instructions_label.pack(pady=5)
+
+instructions_text = tk.Label(window, text=
+    "1. Enter the Amount: Input the amount of the base currency to convert.\n"
+    "2. Select the Base Currency: Choose the currency you want to convert from.\n"
+    "3. Choose the Target Currency: Select the currency you wish to convert to.\n"
+    "(The List is seperated as forex and crptocurrencies then sorted in alphabetically)\n"
+    "4. Press Convert and the converted amount and conversion rate will be displayed.", wraplength=480)
+instructions_text.pack(pady=5)
+# Features
+features_label = tk.Label(window, text="Features", font=("Helvetica", 12))
+features_label.pack(pady=5)
+
+features_text = tk.Label(window, text=
+    "- 123 Currencies metals and cryptocurrencies. 15000+ Currencypairs\n"
+    "- Real time updating exchange rate. API update in milliseconds.\n"
+    "- API data is sourced from institutional providers including banks."
+, wraplength=480)
+features_text.pack(pady=5)
+
 # Currency selection
-from_currency_var = tk.StringVar(value="")
-to_currency_var = tk.StringVar(value="")
+from_currency_var = tk.StringVar(value="USD")
+to_currency_var = tk.StringVar(value="EUR")
 
 # Widgets
 amount_label = tk.Label(window, text="Amount:")
 amount_label.pack(pady=5)
 
-amount_entry = tk.Entry(window)
+amount_entry = tk.Entry(window,width=40)
 amount_entry.pack(pady=5)
 
 # From Currency
 from_currency_label = tk.Label(window, text="From Currency:")
 from_currency_label.pack(pady=5)
 
-from_currency_combobox = ttk.Combobox(window, textvariable=from_currency_var, values=currencies)
+from_currency_combobox = ttk.Combobox(window, textvariable=from_currency_var, values=currencies,width=40,state="readonly")
 from_currency_combobox.pack(pady=5)
 
 # To Currency
 to_currency_label = tk.Label(window, text="To Currency:")
 to_currency_label.pack(pady=5)
 
-to_currency_combobox = ttk.Combobox(window, textvariable=to_currency_var, values=currencies)
+to_currency_combobox = ttk.Combobox(window, textvariable=to_currency_var, values=currencies,width=40,state="readonly")
 to_currency_combobox.pack(pady=5)
 
 # Button
@@ -217,4 +243,5 @@ rate_label = tk.Label(window, text="")
 rate_label.pack(pady=5)
 
 # Run the application
+
 window.mainloop()
