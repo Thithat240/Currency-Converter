@@ -197,15 +197,15 @@ features_label = tk.Label(window, text="Features", font=("Helvetica", 12))
 features_label.pack(pady=5)
 
 features_text = tk.Label(window, text=
-    "- 123 Currencies metals and cryptocurrencies. 15000+ Currencypairs\n"
+    "- 123 Currencies metals and cryptocurrencies. 15000+ Currency pairs.\n"
     "- Real time updating exchange rate. API update in milliseconds.\n"
     "- API data is sourced from institutional providers including banks."
 , wraplength=480)
 features_text.pack(pady=5)
 
 # Currency selection
-from_currency_var = tk.StringVar(value="USD")
-to_currency_var = tk.StringVar(value="EUR")
+from_currency_var = tk.StringVar(value="USD (US Dollar)")
+to_currency_var = tk.StringVar(value="EUR (Euro)")
 
 # Widgets
 amount_label = tk.Label(window, text="Amount:")
